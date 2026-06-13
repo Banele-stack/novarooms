@@ -183,7 +183,7 @@ export default function SearchBar() {
           "WiFi Included",
           "Parking",
           "Furnished",
-          "Student Friendly",
+          "Pet Friendly",
         ].map((tag) => {
           const isActive = activeTags.includes(tag);
 

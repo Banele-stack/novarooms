@@ -6,6 +6,7 @@ export type Review = {
   createdAt: string;
 };
 
+
 export type Room = {
   id: string;
   title: string;
@@ -13,6 +14,38 @@ export type Room = {
   price: number;
   image: string;
   description: string;
-  reviews: Review[];
+
+  bedrooms: number;
+  bathrooms: number;
+  size: number;
+
+  furnished: boolean;
+  wifi: boolean;
+  parking: boolean;
+  electricityIncluded: boolean;
+  waterIncluded: boolean;
+  petsAllowed: boolean;
+
+  // NEW FLEXIBLE LIVING FEATURES (optional per room)
+  kitchen?: boolean;
+  kitchenType?: string;
+
+  diningArea?: boolean;
+  livingRoom?: boolean;
+  balcony?: boolean;
+
+  security?: string;
+  parkingType?: string;
+  internetSpeed?: string;
+
+  smokingAllowed?: boolean;
+  noiseRule?: string;
+
+  propertyType: string;
+  availableFrom: string;
+  deposit: number;
+  leaseTerm: string;
+
   reportCount: number;
+  reviews: Review[];
 };
