@@ -1,14 +1,20 @@
 import { Room } from "../types/room";
 
-
 export const mockRooms: Room[] = [
   {
     id: "1",
-    title: "Modern 1-Bed Apartment in Johannesburg CBD",
-    location: "Johannesburg CBD, Gauteng",
+    name: "Modern 1-Bed Apartment in Johannesburg CBD",
+    category: "Apartment",
+    rating: 4.8,
+    reviewCount: 2,
+    location: {
+      address: "Johannesburg CBD, Gauteng",
+      area: "Johannesburg CBD",
+    },
     price: 3500,
-    image:
+    images: [
       "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&h=800&fit=crop",
+    ],
     description:
       "Modern apartment in secure building with great access to transport, shops, and city life.",
     bedrooms: 1,
@@ -20,7 +26,6 @@ export const mockRooms: Room[] = [
     electricityIncluded: true,
     waterIncluded: true,
     petsAllowed: true,
-
     kitchen: true,
     kitchenType: "Open-plan kitchen",
     diningArea: true,
@@ -31,7 +36,6 @@ export const mockRooms: Room[] = [
     internetSpeed: "High-speed fibre",
     smokingAllowed: false,
     noiseRule: "Quiet hours 10pm - 6am",
-
     propertyType: "Apartment",
     availableFrom: "2026-07-01",
     deposit: 3500,
@@ -50,8 +54,7 @@ export const mockRooms: Room[] = [
         id: "r2",
         name: "Lerato K.",
         rating: 4,
-        comment:
-          "Good place overall, just a bit of street noise at night.",
+        comment: "Good place overall, just a bit of street noise at night.",
         createdAt: "2026-05-18",
       },
     ],
@@ -59,11 +62,18 @@ export const mockRooms: Room[] = [
 
   {
     id: "2",
-    title: "Cozy Loft Apartment in Pretoria East",
-    location: "Pretoria East, Gauteng",
+    name: "Cozy Loft Apartment in Pretoria East",
+    category: "Loft",
+    rating: 4.0,
+    reviewCount: 1,
+    location: {
+      address: "Pretoria East, Gauteng",
+      area: "Pretoria East",
+    },
     price: 2800,
-    image:
+    images: [
       "https://images.unsplash.com/photo-1501183638710-841dd1904471?w=1200&h=800&fit=crop",
+    ],
     description:
       "Modern loft with open space design and secure gated complex living.",
     bedrooms: 1,
@@ -75,7 +85,6 @@ export const mockRooms: Room[] = [
     electricityIncluded: false,
     waterIncluded: true,
     petsAllowed: false,
-
     kitchen: true,
     kitchenType: "Compact kitchen",
     diningArea: false,
@@ -86,7 +95,6 @@ export const mockRooms: Room[] = [
     internetSpeed: "Standard WiFi",
     smokingAllowed: false,
     noiseRule: "No loud music after 9pm",
-
     propertyType: "Loft",
     availableFrom: "2026-07-01",
     deposit: 2800,
@@ -105,11 +113,18 @@ export const mockRooms: Room[] = [
 
   {
     id: "3",
-    title: "Luxury Studio Apartment in Sandton",
-    location: "Sandton, Gauteng",
+    name: "Luxury Studio Apartment in Sandton",
+    category: "Studio",
+    rating: 4.8,
+    reviewCount: 2,
+    location: {
+      address: "Sandton, Gauteng",
+      area: "Sandton",
+    },
     price: 5200,
-    image:
+    images: [
       "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=1200&h=800&fit=crop",
+    ],
     description:
       "Premium studio apartment in the heart of Sandton with modern finishes.",
     bedrooms: 1,
@@ -121,7 +136,6 @@ export const mockRooms: Room[] = [
     electricityIncluded: true,
     waterIncluded: true,
     petsAllowed: false,
-
     kitchen: true,
     kitchenType: "Modern fitted kitchen",
     diningArea: true,
@@ -132,7 +146,6 @@ export const mockRooms: Room[] = [
     internetSpeed: "Ultra-fast fibre",
     smokingAllowed: false,
     noiseRule: "Strict quiet policy",
-
     propertyType: "Studio",
     availableFrom: "2026-07-01",
     deposit: 5200,
@@ -158,11 +171,18 @@ export const mockRooms: Room[] = [
 
   {
     id: "4",
-    title: "Affordable Shared Student Room in Soweto",
-    location: "Soweto, Gauteng",
+    name: "Affordable Shared Student Room in Soweto",
+    category: "Shared Room",
+    rating: 3.0,
+    reviewCount: 1,
+    location: {
+      address: "Soweto, Gauteng",
+      area: "Soweto",
+    },
     price: 1800,
-    image:
+    images: [
       "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=1200&h=800&fit=crop",
+    ],
     description: "Budget shared accommodation with basic facilities.",
     bedrooms: 1,
     bathrooms: 0,
@@ -173,7 +193,6 @@ export const mockRooms: Room[] = [
     electricityIncluded: true,
     waterIncluded: true,
     petsAllowed: false,
-
     kitchen: false,
     kitchenType: "Shared communal kitchen",
     diningArea: false,
@@ -184,7 +203,6 @@ export const mockRooms: Room[] = [
     internetSpeed: "Basic WiFi",
     smokingAllowed: true,
     noiseRule: "General residential rules",
-
     propertyType: "Shared Room",
     availableFrom: "2026-07-01",
     deposit: 1800,
@@ -204,11 +222,18 @@ export const mockRooms: Room[] = [
 
   {
     id: "5",
-    title: "Modern Studio in Rosebank",
-    location: "Rosebank, Gauteng",
+    name: "Modern Studio in Rosebank",
+    category: "Studio",
+    rating: 0,
+    reviewCount: 0,
+    location: {
+      address: "Rosebank, Gauteng",
+      area: "Rosebank",
+    },
     price: 7500,
-    image:
+    images: [
       "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&h=800&fit=crop",
+    ],
     description:
       "High-end studio apartment close to malls, offices, and entertainment.",
     bedrooms: 1,
@@ -220,7 +245,6 @@ export const mockRooms: Room[] = [
     electricityIncluded: false,
     waterIncluded: true,
     petsAllowed: false,
-
     kitchen: true,
     kitchenType: "Luxury kitchen",
     diningArea: true,
@@ -231,7 +255,6 @@ export const mockRooms: Room[] = [
     internetSpeed: "Premium fibre",
     smokingAllowed: false,
     noiseRule: "Strict building rules",
-
     propertyType: "Studio",
     availableFrom: "2026-07-01",
     deposit: 7500,
@@ -242,11 +265,18 @@ export const mockRooms: Room[] = [
 
   {
     id: "6",
-    title: "Budget Backroom Rental in Centurion",
-    location: "Centurion, Gauteng",
+    name: "Budget Backroom Rental in Centurion",
+    category: "Backroom",
+    rating: 3.0,
+    reviewCount: 1,
+    location: {
+      address: "Centurion, Gauteng",
+      area: "Centurion",
+    },
     price: 1200,
-    image:
+    images: [
       "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=1200&h=800&fit=crop",
+    ],
     description: "Simple backroom rental in shared yard setup.",
     bedrooms: 1,
     bathrooms: 0,
@@ -257,7 +287,6 @@ export const mockRooms: Room[] = [
     electricityIncluded: false,
     waterIncluded: false,
     petsAllowed: false,
-
     kitchen: false,
     kitchenType: "Outdoor shared kitchen",
     diningArea: false,
@@ -268,7 +297,6 @@ export const mockRooms: Room[] = [
     internetSpeed: "No WiFi",
     smokingAllowed: true,
     noiseRule: "Respect shared yard rules",
-
     propertyType: "Backroom",
     availableFrom: "2026-07-01",
     deposit: 1200,
@@ -288,11 +316,18 @@ export const mockRooms: Room[] = [
 
   {
     id: "7",
-    title: "Modern City Studio Apartment",
-    location: "Johannesburg CBD, Gauteng",
+    name: "Modern City Studio Apartment",
+    category: "Studio",
+    rating: 4.0,
+    reviewCount: 1,
+    location: {
+      address: "Johannesburg CBD, Gauteng",
+      area: "Johannesburg CBD",
+    },
     price: 4800,
-    image:
+    images: [
       "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=1200&h=800&fit=crop",
+    ],
     description:
       "Stylish city apartment with modern finishes and strong security.",
     bedrooms: 1,
@@ -304,7 +339,6 @@ export const mockRooms: Room[] = [
     electricityIncluded: false,
     waterIncluded: true,
     petsAllowed: false,
-
     kitchen: true,
     kitchenType: "Modern kitchen",
     diningArea: true,
@@ -315,7 +349,6 @@ export const mockRooms: Room[] = [
     internetSpeed: "High-speed fibre",
     smokingAllowed: false,
     noiseRule: "Building quiet hours enforced",
-
     propertyType: "Studio",
     availableFrom: "2026-07-01",
     deposit: 4800,
@@ -335,11 +368,18 @@ export const mockRooms: Room[] = [
 
   {
     id: "8",
-    title: "Furnished Room in Midrand Home",
-    location: "Midrand, Gauteng",
+    name: "Furnished Room in Midrand Home",
+    category: "House Room",
+    rating: 5.0,
+    reviewCount: 1,
+    location: {
+      address: "Midrand, Gauteng",
+      area: "Midrand",
+    },
     price: 3000,
-    image:
+    images: [
       "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1200&h=800&fit=crop",
+    ],
     description:
       "Fully furnished room in a shared home with great access to transport.",
     bedrooms: 1,
@@ -351,7 +391,6 @@ export const mockRooms: Room[] = [
     electricityIncluded: true,
     waterIncluded: true,
     petsAllowed: false,
-
     kitchen: true,
     kitchenType: "Shared modern kitchen",
     diningArea: true,
@@ -362,7 +401,6 @@ export const mockRooms: Room[] = [
     internetSpeed: "Fast fibre",
     smokingAllowed: false,
     noiseRule: "No loud parties",
-
     propertyType: "House Room",
     availableFrom: "2026-07-01",
     deposit: 3000,
@@ -382,13 +420,19 @@ export const mockRooms: Room[] = [
 
   {
     id: "9",
-    title: "Budget Room in Shared House",
-    location: "Auckland Park, Gauteng",
+    name: "Budget Room in Shared House",
+    category: "House Room",
+    rating: 3.0,
+    reviewCount: 1,
+    location: {
+      address: "Auckland Park, Gauteng",
+      area: "Auckland Park",
+    },
     price: 2200,
-    image:
+    images: [
       "https://images.unsplash.com/photo-1527030280862-64139fba04ca?w=1200&h=800&fit=crop",
-    description:
-      "Affordable shared accommodation near transport routes.",
+    ],
+    description: "Affordable shared accommodation near transport routes.",
     bedrooms: 1,
     bathrooms: 0,
     size: 0,
@@ -398,7 +442,6 @@ export const mockRooms: Room[] = [
     electricityIncluded: true,
     waterIncluded: true,
     petsAllowed: false,
-
     kitchen: true,
     kitchenType: "Shared kitchen",
     diningArea: false,
@@ -409,7 +452,6 @@ export const mockRooms: Room[] = [
     internetSpeed: "Basic WiFi",
     smokingAllowed: true,
     noiseRule: "General house rules",
-
     propertyType: "House Room",
     availableFrom: "2026-07-01",
     deposit: 2200,

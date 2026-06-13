@@ -21,22 +21,28 @@ import {
   Building2,
 } from "lucide-react";
 
-export default function RoomCard({ room }: { room: Room }) {
+export default function RoomCard({
+  room,
+}: {
+  room: Room & { distance?: number };
+}) {
   const reportCount = room.reportCount ?? 0;
 
   const formatMoney = (value: number) =>
     new Intl.NumberFormat("en-ZA").format(value);
 
   function getReportStatus(count: number) {
-    if (count === 0)
+    if (count === 0) {
       return {
         color: "text-green-600 bg-green-50 border-green-200",
       };
+    }
 
-    if (count <= 2)
+    if (count <= 2) {
       return {
         color: "text-yellow-600 bg-yellow-50 border-yellow-200",
       };
+    }
 
     return {
       color: "text-red-600 bg-red-50 border-red-200",
@@ -55,8 +61,8 @@ export default function RoomCard({ room }: { room: Room }) {
         {/* IMAGE */}
         <div className="relative overflow-hidden">
           <img
-            src={room.image}
-            alt={room.title}
+            src={room.images[0]}
+            alt={room.name}
             className="h-60 w-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
 
@@ -67,6 +73,7 @@ export default function RoomCard({ room }: { room: Room }) {
             </span>
             <span className="text-xs text-gray-500">/month</span>
           </div>
+
 
           {/* REPORT */}
           <div
@@ -84,13 +91,15 @@ export default function RoomCard({ room }: { room: Room }) {
 
           {/* TITLE */}
           <h3 className="font-bold text-lg line-clamp-1">
-            {room.title}
+            {room.name}
           </h3>
 
           {/* LOCATION */}
           <div className="flex items-center gap-1 mt-2 text-gray-500">
             <MapPin size={15} />
-            <span className="text-sm">{room.location}</span>
+            <span className="text-sm">
+              {room.location.address}
+            </span>
           </div>
 
           {/* PROPERTY TYPE */}
@@ -109,10 +118,10 @@ export default function RoomCard({ room }: { room: Room }) {
 
             <div className="flex items-center gap-2 bg-gray-100 rounded-full px-3 py-2 text-xs">
               <Bath size={14} />
-              {room.bathrooms} Bathroom{room.bathrooms > 1 && "s"}
+              {room.bathrooms} Bathroom
+              {room.bathrooms > 1 && "s"}
             </div>
 
-            {/* SIZE - ONLY SHOW IF VALID */}
             {hasValidSize && (
               <div className="flex items-center gap-2 bg-gray-100 rounded-full px-3 py-2 text-xs">
                 <Ruler size={14} />
@@ -120,7 +129,6 @@ export default function RoomCard({ room }: { room: Room }) {
               </div>
             )}
 
-            {/* PARKING TYPE */}
             {room.parkingType && (
               <div className="flex items-center gap-2 bg-gray-100 rounded-full px-3 py-2 text-xs">
                 <Building2 size={14} />
@@ -129,13 +137,20 @@ export default function RoomCard({ room }: { room: Room }) {
             )}
           </div>
 
-          {/* LIFESTYLE FEATURES */}
+          {/* AMENITIES */}
           <div className="flex flex-wrap gap-2 mt-4">
 
             {room.wifi && (
               <div className="flex items-center gap-1 bg-violet-50 px-3 py-1.5 rounded-full text-xs">
                 <Wifi size={13} />
                 WiFi
+              </div>
+            )}
+
+            {room.internetSpeed && (
+              <div className="flex items-center gap-1 bg-violet-50 px-3 py-1.5 rounded-full text-xs">
+                <Wifi size={13} />
+                {room.internetSpeed}
               </div>
             )}
 
@@ -156,14 +171,14 @@ export default function RoomCard({ room }: { room: Room }) {
             {room.kitchen && (
               <div className="flex items-center gap-1 bg-violet-50 px-3 py-1.5 rounded-full text-xs">
                 <UtensilsCrossed size={13} />
-                Kitchen
+                {room.kitchenType || "Kitchen"}
               </div>
             )}
 
             {room.diningArea && (
               <div className="flex items-center gap-1 bg-violet-50 px-3 py-1.5 rounded-full text-xs">
                 <Lamp size={13} />
-                Dining
+                Dining Area
               </div>
             )}
 
@@ -171,6 +186,13 @@ export default function RoomCard({ room }: { room: Room }) {
               <div className="flex items-center gap-1 bg-violet-50 px-3 py-1.5 rounded-full text-xs">
                 <Home size={13} />
                 Living Room
+              </div>
+            )}
+
+            {room.balcony && (
+              <div className="flex items-center gap-1 bg-violet-50 px-3 py-1.5 rounded-full text-xs">
+                <Building2 size={13} />
+                Balcony
               </div>
             )}
 
@@ -191,12 +213,12 @@ export default function RoomCard({ room }: { room: Room }) {
             {room.petsAllowed && (
               <div className="flex items-center gap-1 bg-violet-50 px-3 py-1.5 rounded-full text-xs">
                 <PawPrint size={13} />
-                Pets
+                Pets Allowed
               </div>
             )}
           </div>
 
-          {/* RULES */}
+          {/* EXTRA INFO */}
           <div className="mt-4 flex flex-wrap gap-2">
 
             {room.security && (
@@ -222,7 +244,10 @@ export default function RoomCard({ room }: { room: Room }) {
                 }`}
               >
                 <CigaretteOff size={13} />
-                Smoking {room.smokingAllowed ? "Allowed" : "Not Allowed"}
+                Smoking{" "}
+                {room.smokingAllowed
+                  ? "Allowed"
+                  : "Not Allowed"}
               </div>
             )}
           </div>

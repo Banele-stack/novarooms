@@ -9,10 +9,23 @@ export type Review = {
 
 export type Room = {
   id: string;
-  title: string;
-  location: string;
+  name: string;
+  category: string;
+
+  rating: number;
+  reviewCount: number;
+
+  location: {
+    address: string;
+    area: string;
+    lat?: number;
+    lng?: number;
+  };
+
   price: number;
-  image: string;
+
+  images: string[];
+
   description: string;
 
   bedrooms: number;
@@ -26,7 +39,7 @@ export type Room = {
   waterIncluded: boolean;
   petsAllowed: boolean;
 
-  // NEW FLEXIBLE LIVING FEATURES (optional per room)
+  // Flexible features
   kitchen?: boolean;
   kitchenType?: string;
 

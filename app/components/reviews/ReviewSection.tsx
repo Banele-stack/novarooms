@@ -135,7 +135,7 @@ export default function ReviewSection({
               <div>
                 <p className="font-medium text-sm">{review.name}</p>
                 <p className="text-xs text-gray-400 mt-1">
-                  {new Date(review.createdAt).toLocaleDateString()}
+                  {new Date(review.createdAt).toLocaleDateString("en-ZA")}
                 </p>
               </div>
 
