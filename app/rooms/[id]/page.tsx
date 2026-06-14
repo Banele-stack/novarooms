@@ -9,6 +9,21 @@ import {
   ShieldCheck,
   Phone,
   MessageCircle,
+  Building2,
+  BedDouble,
+  Bath,
+  Ruler,
+  Home,
+  Car,
+  Wifi,
+  UtensilsCrossed,
+  Volume2,
+  CigaretteOff,
+  Sofa,
+  Lamp,
+  Zap,
+  Droplets,
+  PawPrint,
 } from "lucide-react";
 
 import ReviewSection from "@/app/components/reviews/ReviewSection";
@@ -154,6 +169,7 @@ export default function RoomPage({
               {room.name}
             </h1>
 
+
             <div className="flex flex-wrap gap-4 mt-3 text-sm text-gray-600">
               <div className="flex items-center gap-1">
                 <MapPin size={15} />
@@ -177,6 +193,212 @@ export default function RoomPage({
               </div>
             </div>
 
+            
+
+{/* ABOUT */}
+<div className="mt-8">
+  <h2 className="text-2xl font-bold mb-3">
+    About this property
+  </h2>
+
+  <p className="text-gray-600 leading-7">
+    {room.description}
+  </p>
+
+  {/* PROPERTY DETAILS */}
+  <div className="mt-8">
+    <h3 className="font-semibold text-lg mb-4">
+      Property Details
+    </h3>
+
+    <div className="flex flex-wrap gap-3">
+
+      {room.propertyType && (
+        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+          <Home size={16} />
+          {room.propertyType}
+        </div>
+      )}
+
+      {room.category && (
+        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+          <Building2 size={16} />
+          {room.category}
+        </div>
+      )}
+
+      {room.bedrooms !== undefined && (
+        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+          <BedDouble size={16} />
+          {room.bedrooms} Bedroom{room.bedrooms !== 1 && "s"}
+        </div>
+      )}
+
+      {room.bathrooms !== undefined && (
+        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+          <Bath size={16} />
+          {room.bathrooms} Bathroom{room.bathrooms !== 1 && "s"}
+        </div>
+      )}
+
+      {room.size > 0 && (
+        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+          <Ruler size={16} />
+          {room.size} m²
+        </div>
+      )}
+
+      {room.deposit > 0 && (
+        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+          💰 Deposit R{formatMoney(room.deposit)}
+        </div>
+      )}
+
+      {room.leaseTerm && (
+        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+          📅 {room.leaseTerm}
+        </div>
+      )}
+
+      {room.availableFrom && (
+        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+          🗓️ Available {room.availableFrom}
+        </div>
+      )}
+
+      {room.parkingType && (
+        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+          <Car size={16} />
+          {room.parkingType}
+        </div>
+      )}
+
+      {room.security && (
+        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+          <ShieldCheck size={16} />
+          {room.security}
+        </div>
+      )}
+
+      {room.internetSpeed && (
+        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+          <Wifi size={16} />
+          {room.internetSpeed}
+        </div>
+      )}
+
+      {room.kitchenType && (
+        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+          <UtensilsCrossed size={16} />
+          {room.kitchenType}
+        </div>
+      )}
+
+      {room.noiseRule && (
+        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+          <Volume2 size={16} />
+          {room.noiseRule}
+        </div>
+      )}
+
+      {typeof room.smokingAllowed === "boolean" && (
+        <div
+          className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm ${
+            room.smokingAllowed
+              ? "bg-green-100 text-green-700"
+              : "bg-red-100 text-red-600"
+          }`}
+        >
+          <CigaretteOff size={16} />
+          Smoking {room.smokingAllowed ? "Allowed" : "Not Allowed"}
+        </div>
+      )}
+    </div>
+  </div>
+
+  {/* AMENITIES */}
+  <div className="mt-10">
+    <h3 className="font-semibold text-lg mb-4">
+      Amenities
+    </h3>
+
+    <div className="flex flex-wrap gap-3">
+
+      {room.wifi && (
+        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+          <Wifi size={16} />
+          WiFi
+        </div>
+      )}
+
+      {room.furnished && (
+        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+          <Sofa size={16} />
+          Furnished
+        </div>
+      )}
+
+      {room.parking && (
+        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+          <Car size={16} />
+          Parking
+        </div>
+      )}
+
+      {room.kitchen && (
+        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+          <UtensilsCrossed size={16} />
+          Kitchen
+        </div>
+      )}
+
+      {room.diningArea && (
+        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+          <Lamp size={16} />
+          Dining Area
+        </div>
+      )}
+
+      {room.livingRoom && (
+        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+          <Home size={16} />
+          Living Room
+        </div>
+      )}
+
+      {room.balcony && (
+        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+          <Building2 size={16} />
+          Balcony
+        </div>
+      )}
+
+      {room.electricityIncluded && (
+        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+          <Zap size={16} />
+          Electricity Included
+        </div>
+      )}
+
+      {room.waterIncluded && (
+        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+          <Droplets size={16} />
+          Water Included
+        </div>
+      )}
+
+      {room.petsAllowed && (
+        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+          <PawPrint size={16} />
+          Pets Allowed
+        </div>
+      )}
+    </div>
+  </div>
+</div>
+
+
+
             {/* MAP */}
             <div className="mt-6">
               <h2 className="font-semibold mb-2">Location</h2>
@@ -196,13 +418,6 @@ export default function RoomPage({
               </a>
             </div>
 
-            {/* ABOUT */}
-            <div className="mt-8">
-              <h2 className="font-semibold text-lg mb-2">About</h2>
-              <p className="text-sm text-gray-600">
-                {room.description}
-              </p>
-            </div>
 
             <ReviewSection reviews={room.reviews} />
           </div>
