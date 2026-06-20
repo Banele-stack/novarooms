@@ -41,7 +41,8 @@ export default function RoomPage({
   const [reportOpen, setReportOpen] = useState(false);
   const [reason, setReason] = useState("Fake listing");
   const [success, setSuccess] = useState(false);
-
+const [selectedImage, setSelectedImage] = useState(0);
+const [galleryOpen, setGalleryOpen] = useState(false);
   const [userLocation, setUserLocation] = useState<{
     lat: number;
     lng: number;
@@ -69,7 +70,7 @@ export default function RoomPage({
   const avgRating =
     room.reviews.length > 0
       ? room.reviews.reduce((a, r) => a + r.rating, 0) /
-        room.reviews.length
+      room.reviews.length
       : 0;
 
   function formatMoney(value: number) {
@@ -98,9 +99,9 @@ export default function RoomPage({
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos((lat1 * Math.PI) / 180) *
-        Math.cos((lat2 * Math.PI) / 180) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
@@ -116,11 +117,11 @@ export default function RoomPage({
 
   const distance = userLocation
     ? getDistanceKm(
-        userLocation.lat,
-        userLocation.lng,
-        coords.lat,
-        coords.lng
-      )
+      userLocation.lat,
+      userLocation.lng,
+      coords.lat,
+      coords.lng
+    )
     : null;
 
   // 👉 CONTACT
@@ -145,20 +146,70 @@ export default function RoomPage({
         </button>
 
         {/* IMAGE */}
-        <div className="relative overflow-hidden rounded-2xl bg-white shadow-sm">
-          <img
-            src={room.images[0]}
-            alt={room.name}
-            className="w-full h-[220px] sm:h-[280px] md:h-[380px] object-cover"
-          />
+        {/* GALLERY */}
+{/* GALLERY */}
+<div className="bg-white rounded-2xl p-2 shadow-sm">
+  <div className="relative">
 
-          <div className="absolute bottom-3 left-3 bg-white/95 px-3 py-2 rounded-xl">
-            <p className="text-lg font-semibold text-violet-600">
-              R{formatMoney(room.price)}
-            </p>
-            <p className="text-xs text-gray-500">per month</p>
-          </div>
-        </div>
+    <img
+      src={room.images[selectedImage]}
+      alt={room.name}
+      onClick={() => setGalleryOpen(true)}
+      className="w-full h-[250px] sm:h-[350px] md:h-[500px] object-cover rounded-xl cursor-pointer"
+    />
+
+    {room.images.length > 1 && (
+      <>
+        <button
+          onClick={() =>
+            setSelectedImage((prev) =>
+              prev === 0 ? room.images.length - 1 : prev - 1
+            )
+          }
+          className="absolute left-4 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/90 shadow flex items-center justify-center"
+        >
+          ‹
+        </button>
+
+        <button
+          onClick={() =>
+            setSelectedImage((prev) =>
+              prev === room.images.length - 1 ? 0 : prev + 1
+            )
+          }
+          className="absolute right-4 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/90 shadow flex items-center justify-center"
+        >
+          ›
+        </button>
+      </>
+    )}
+
+    <div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm">
+      {selectedImage + 1} / {room.images.length}
+    </div>
+  </div>
+
+  {/* Thumbnail Scroll */}
+  <div className="flex gap-2 overflow-x-auto mt-3 pb-1">
+    {room.images.map((image, index) => (
+      <button
+        key={index}
+        onClick={() => setSelectedImage(index)}
+        className={`shrink-0 rounded-lg overflow-hidden border-2 ${
+          selectedImage === index
+            ? "border-violet-600"
+            : "border-transparent"
+        }`}
+      >
+        <img
+          src={image}
+          alt={`${room.name}-${index}`}
+          className="w-24 h-20 object-cover"
+        />
+      </button>
+    ))}
+  </div>
+</div>
 
         {/* CONTENT */}
         <div className="grid lg:grid-cols-[1fr_320px] gap-6 mt-6">
@@ -168,6 +219,12 @@ export default function RoomPage({
             <h1 className="text-2xl md:text-3xl font-semibold">
               {room.name}
             </h1>
+             <div className=" bg-white/95 px-3 py-2 rounded-xl">
+            <p className="text-lg font-semibold text-violet-600">
+              R{formatMoney(room.price)}
+            </p>
+            <p className="text-xs text-gray-500">per month</p>
+          </div>
 
 
             <div className="flex flex-wrap gap-4 mt-3 text-sm text-gray-600">
@@ -193,209 +250,208 @@ export default function RoomPage({
               </div>
             </div>
 
-            
 
-{/* ABOUT */}
-<div className="mt-8">
-  <h2 className="text-2xl font-bold mb-3">
-    About this property
-  </h2>
 
-  <p className="text-gray-600 leading-7">
-    {room.description}
-  </p>
+            {/* ABOUT */}
+            <div className="mt-8">
+              <h2 className="text-2xl font-bold mb-3">
+                About this property
+              </h2>
 
-  {/* PROPERTY DETAILS */}
-  <div className="mt-8">
-    <h3 className="font-semibold text-lg mb-4">
-      Property Details
-    </h3>
+              <p className="text-gray-600 leading-7">
+                {room.description}
+              </p>
 
-    <div className="flex flex-wrap gap-3">
+              {/* PROPERTY DETAILS */}
+              <div className="mt-8">
+                <h3 className="font-semibold text-lg mb-4">
+                  Property Details
+                </h3>
 
-      {room.propertyType && (
-        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
-          <Home size={16} />
-          {room.propertyType}
-        </div>
-      )}
+                <div className="flex flex-wrap gap-3">
 
-      {room.category && (
-        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
-          <Building2 size={16} />
-          {room.category}
-        </div>
-      )}
+                  {room.propertyType && (
+                    <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+                      <Home size={16} />
+                      {room.propertyType}
+                    </div>
+                  )}
 
-      {room.bedrooms !== undefined && (
-        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
-          <BedDouble size={16} />
-          {room.bedrooms} Bedroom{room.bedrooms !== 1 && "s"}
-        </div>
-      )}
+                  {room.category && (
+                    <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+                      <Building2 size={16} />
+                      {room.category}
+                    </div>
+                  )}
 
-      {room.bathrooms !== undefined && (
-        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
-          <Bath size={16} />
-          {room.bathrooms} Bathroom{room.bathrooms !== 1 && "s"}
-        </div>
-      )}
+                  {room.bedrooms !== undefined && (
+                    <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+                      <BedDouble size={16} />
+                      {room.bedrooms} Bedroom{room.bedrooms !== 1 && "s"}
+                    </div>
+                  )}
 
-      {room.size > 0 && (
-        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
-          <Ruler size={16} />
-          {room.size} m²
-        </div>
-      )}
+                  {room.bathrooms !== undefined && (
+                    <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+                      <Bath size={16} />
+                      {room.bathrooms} Bathroom{room.bathrooms !== 1 && "s"}
+                    </div>
+                  )}
 
-      {room.deposit > 0 && (
-        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
-          💰 Deposit R{formatMoney(room.deposit)}
-        </div>
-      )}
+                  {room.size > 0 && (
+                    <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+                      <Ruler size={16} />
+                      {room.size} m²
+                    </div>
+                  )}
 
-      {room.leaseTerm && (
-        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
-          📅 {room.leaseTerm}
-        </div>
-      )}
+                  {room.deposit > 0 && (
+                    <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+                      💰 Deposit R{formatMoney(room.deposit)}
+                    </div>
+                  )}
 
-      {room.availableFrom && (
-        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
-          🗓️ Available {room.availableFrom}
-        </div>
-      )}
+                  {room.leaseTerm && (
+                    <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+                      📅 {room.leaseTerm}
+                    </div>
+                  )}
 
-      {room.parkingType && (
-        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
-          <Car size={16} />
-          {room.parkingType}
-        </div>
-      )}
+                  {room.availableFrom && (
+                    <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+                      🗓️ Available {room.availableFrom}
+                    </div>
+                  )}
 
-      {room.security && (
-        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
-          <ShieldCheck size={16} />
-          {room.security}
-        </div>
-      )}
+                  {room.parkingType && (
+                    <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+                      <Car size={16} />
+                      {room.parkingType}
+                    </div>
+                  )}
 
-      {room.internetSpeed && (
-        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
-          <Wifi size={16} />
-          {room.internetSpeed}
-        </div>
-      )}
+                  {room.security && (
+                    <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+                      <ShieldCheck size={16} />
+                      {room.security}
+                    </div>
+                  )}
 
-      {room.kitchenType && (
-        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
-          <UtensilsCrossed size={16} />
-          {room.kitchenType}
-        </div>
-      )}
+                  {room.internetSpeed && (
+                    <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+                      <Wifi size={16} />
+                      {room.internetSpeed}
+                    </div>
+                  )}
 
-      {room.noiseRule && (
-        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
-          <Volume2 size={16} />
-          {room.noiseRule}
-        </div>
-      )}
+                  {room.kitchenType && (
+                    <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+                      <UtensilsCrossed size={16} />
+                      {room.kitchenType}
+                    </div>
+                  )}
 
-      {typeof room.smokingAllowed === "boolean" && (
-        <div
-          className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm ${
-            room.smokingAllowed
-              ? "bg-green-100 text-green-700"
-              : "bg-red-100 text-red-600"
-          }`}
-        >
-          <CigaretteOff size={16} />
-          Smoking {room.smokingAllowed ? "Allowed" : "Not Allowed"}
-        </div>
-      )}
-    </div>
-  </div>
+                  {room.noiseRule && (
+                    <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 text-sm">
+                      <Volume2 size={16} />
+                      {room.noiseRule}
+                    </div>
+                  )}
 
-  {/* AMENITIES */}
-  <div className="mt-10">
-    <h3 className="font-semibold text-lg mb-4">
-      Amenities
-    </h3>
+                  {typeof room.smokingAllowed === "boolean" && (
+                    <div
+                      className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm ${room.smokingAllowed
+                          ? "bg-green-100 text-green-700"
+                          : "bg-red-100 text-red-600"
+                        }`}
+                    >
+                      <CigaretteOff size={16} />
+                      Smoking {room.smokingAllowed ? "Allowed" : "Not Allowed"}
+                    </div>
+                  )}
+                </div>
+              </div>
 
-    <div className="flex flex-wrap gap-3">
+              {/* AMENITIES */}
+              <div className="mt-10">
+                <h3 className="font-semibold text-lg mb-4">
+                  Amenities
+                </h3>
 
-      {room.wifi && (
-        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
-          <Wifi size={16} />
-          WiFi
-        </div>
-      )}
+                <div className="flex flex-wrap gap-3">
 
-      {room.furnished && (
-        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
-          <Sofa size={16} />
-          Furnished
-        </div>
-      )}
+                  {room.wifi && (
+                    <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+                      <Wifi size={16} />
+                      WiFi
+                    </div>
+                  )}
 
-      {room.parking && (
-        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
-          <Car size={16} />
-          Parking
-        </div>
-      )}
+                  {room.furnished && (
+                    <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+                      <Sofa size={16} />
+                      Furnished
+                    </div>
+                  )}
 
-      {room.kitchen && (
-        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
-          <UtensilsCrossed size={16} />
-          Kitchen
-        </div>
-      )}
+                  {room.parking && (
+                    <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+                      <Car size={16} />
+                      Parking
+                    </div>
+                  )}
 
-      {room.diningArea && (
-        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
-          <Lamp size={16} />
-          Dining Area
-        </div>
-      )}
+                  {room.kitchen && (
+                    <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+                      <UtensilsCrossed size={16} />
+                      Kitchen
+                    </div>
+                  )}
 
-      {room.livingRoom && (
-        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
-          <Home size={16} />
-          Living Room
-        </div>
-      )}
+                  {room.diningArea && (
+                    <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+                      <Lamp size={16} />
+                      Dining Area
+                    </div>
+                  )}
 
-      {room.balcony && (
-        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
-          <Building2 size={16} />
-          Balcony
-        </div>
-      )}
+                  {room.livingRoom && (
+                    <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+                      <Home size={16} />
+                      Living Room
+                    </div>
+                  )}
 
-      {room.electricityIncluded && (
-        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
-          <Zap size={16} />
-          Electricity Included
-        </div>
-      )}
+                  {room.balcony && (
+                    <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+                      <Building2 size={16} />
+                      Balcony
+                    </div>
+                  )}
 
-      {room.waterIncluded && (
-        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
-          <Droplets size={16} />
-          Water Included
-        </div>
-      )}
+                  {room.electricityIncluded && (
+                    <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+                      <Zap size={16} />
+                      Electricity Included
+                    </div>
+                  )}
 
-      {room.petsAllowed && (
-        <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
-          <PawPrint size={16} />
-          Pets Allowed
-        </div>
-      )}
-    </div>
-  </div>
-</div>
+                  {room.waterIncluded && (
+                    <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+                      <Droplets size={16} />
+                      Water Included
+                    </div>
+                  )}
+
+                  {room.petsAllowed && (
+                    <div className="flex items-center gap-2 bg-violet-50 rounded-full px-4 py-2 text-sm">
+                      <PawPrint size={16} />
+                      Pets Allowed
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
 
 
 
@@ -456,7 +512,7 @@ export default function RoomPage({
       </div>
 
       {/* MOBILE CTA */}
-            {/* MOBILE CTA */}
+      {/* MOBILE CTA */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white shadow-lg p-3 z-50 border-t">
         <div className="grid grid-cols-3 gap-2">
 
@@ -494,52 +550,112 @@ export default function RoomPage({
       {/* Spacer for fixed bottom bar */}
       <div className="h-20 lg:hidden" />
 
-            {/* REPORT MODAL */}
-{reportOpen && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-    <div className="w-full max-w-md bg-white rounded-2xl p-6 shadow-2xl">
+      {/* REPORT MODAL */}
+      {reportOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+          <div className="w-full max-w-md bg-white rounded-2xl p-6 shadow-2xl">
 
-      {success ? (
-        <div className="text-center py-10">
-          <p className="text-green-600 font-bold text-lg">
-            Report submitted successfully ✅
-          </p>
+            {success ? (
+              <div className="text-center py-10">
+                <p className="text-green-600 font-bold text-lg">
+                  Report submitted successfully ✅
+                </p>
+              </div>
+            ) : (
+              <>
+                <h2 className="text-lg font-bold">Report Business</h2>
+
+                <p className="text-sm text-gray-500 mt-1">
+                  Tell us what's wrong
+                </p>
+
+                <select
+                  value={reason}
+                  onChange={(e) => setReason(e.target.value)}
+                  className="w-full border p-3 mt-4 rounded-xl"
+                >
+                  <option>Fake business</option>
+                  <option>Scam / fraud</option>
+                  <option>Wrong information</option>
+                  <option>Inappropriate content</option>
+                </select>
+
+                <button
+                  onClick={submitReport}
+                  className="w-full bg-red-600 text-white py-3 mt-4 rounded-xl"
+                >
+                  Submit Report
+                </button>
+
+                <button
+                  onClick={() => setReportOpen(false)}
+                  className="w-full mt-3 text-sm text-gray-500"
+                >
+                  Cancel
+                </button>
+              </>
+            )}
+
+          </div>
         </div>
-      ) : (
-        <>
-          <h2 className="text-lg font-bold">Report Business</h2>
-
-          <p className="text-sm text-gray-500 mt-1">
-            Tell us what's wrong
-          </p>
-
-          <select
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
-            className="w-full border p-3 mt-4 rounded-xl"
-          >
-            <option>Fake business</option>
-            <option>Scam / fraud</option>
-            <option>Wrong information</option>
-            <option>Inappropriate content</option>
-          </select>
-
-          <button
-            onClick={submitReport}
-            className="w-full bg-red-600 text-white py-3 mt-4 rounded-xl"
-          >
-            Submit Report
-          </button>
-
-          <button
-            onClick={() => setReportOpen(false)}
-            className="w-full mt-3 text-sm text-gray-500"
-          >
-            Cancel
-          </button>
-        </>
       )}
+      {galleryOpen && (
+  <div className="fixed inset-0 z-[100] bg-black">
+    
+    <button
+      onClick={() => setGalleryOpen(false)}
+      className="absolute top-4 right-4 text-white text-4xl z-10"
+    >
+      ×
+    </button>
 
+    {selectedImage > 0 && (
+      <button
+        onClick={() =>
+          setSelectedImage((prev) => prev - 1)
+        }
+        className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-5xl z-10"
+      >
+        ‹
+      </button>
+    )}
+
+    {selectedImage < room.images.length - 1 && (
+      <button
+        onClick={() =>
+          setSelectedImage((prev) => prev + 1)
+        }
+        className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-5xl z-10"
+      >
+        ›
+      </button>
+    )}
+
+    <div className="h-full flex items-center justify-center p-6">
+      <img
+        src={room.images[selectedImage]}
+        alt={room.name}
+        className="max-h-full max-w-full object-contain"
+      />
+    </div>
+
+    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 overflow-x-auto max-w-[90vw]">
+      {room.images.map((image, index) => (
+        <button
+          key={image}
+          onClick={() => setSelectedImage(index)}
+        >
+          <img
+            src={image}
+            alt={`${room.name}-${index}`}
+            className={`w-20 h-16 rounded object-cover border-2 ${
+              selectedImage === index
+                ? "border-white"
+                : "border-transparent"
+            }`}
+          />
+        </button>
+      ))}
     </div>
   </div>
 )}

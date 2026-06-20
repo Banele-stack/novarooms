@@ -13,8 +13,12 @@ export const mockRooms: Room[] = [
     },
     price: 3500,
     images: [
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&h=800&fit=crop",
-    ],
+  "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&h=800&fit=crop",
+  "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&h=800&fit=crop",
+  "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=800&fit=crop",
+  "https://images.unsplash.com/photo-1494526585095-c41746248156?w=1200&h=800&fit=crop",
+  "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1200&h=800&fit=crop",
+],
     description:
       "Modern apartment in secure building with great access to transport, shops, and city life.",
     bedrooms: 1,
@@ -71,9 +75,13 @@ export const mockRooms: Room[] = [
       area: "Pretoria East",
     },
     price: 2800,
-    images: [
-      "https://images.unsplash.com/photo-1501183638710-841dd1904471?w=1200&h=800&fit=crop",
-    ],
+   images: [
+  "https://images.unsplash.com/photo-1501183638710-841dd1904471?w=1200&h=800&fit=crop",
+  "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&h=800&fit=crop",
+  "https://images.unsplash.com/photo-1494526585095-c41746248156?w=1200&h=800&fit=crop",
+  "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=800&fit=crop",
+  "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&h=800&fit=crop",
+],
     description:
       "Modern loft with open space design and secure gated complex living.",
     bedrooms: 1,
@@ -123,8 +131,12 @@ export const mockRooms: Room[] = [
     },
     price: 5200,
     images: [
-      "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=1200&h=800&fit=crop",
-    ],
+  "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=1200&h=800&fit=crop",
+  "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=1200&h=800&fit=crop",
+  "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&h=800&fit=crop",
+  "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=800&fit=crop",
+  "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&h=800&fit=crop",
+],
     description:
       "Premium studio apartment in the heart of Sandton with modern finishes.",
     bedrooms: 1,
@@ -182,6 +194,10 @@ export const mockRooms: Room[] = [
     price: 1800,
     images: [
       "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1494526585095-c41746248156?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&h=800&fit=crop",
     ],
     description: "Budget shared accommodation with basic facilities.",
     bedrooms: 1,
@@ -233,6 +249,10 @@ export const mockRooms: Room[] = [
     price: 7500,
     images: [
       "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1494526585095-c41746248156?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&h=800&fit=crop",
     ],
     description:
       "High-end studio apartment close to malls, offices, and entertainment.",
@@ -276,6 +296,10 @@ export const mockRooms: Room[] = [
     price: 1200,
     images: [
       "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1494526585095-c41746248156?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&h=800&fit=crop",
     ],
     description: "Simple backroom rental in shared yard setup.",
     bedrooms: 1,
@@ -327,6 +351,10 @@ export const mockRooms: Room[] = [
     price: 4800,
     images: [
       "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1494526585095-c41746248156?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&h=800&fit=crop",
     ],
     description:
       "Stylish city apartment with modern finishes and strong security.",
@@ -379,6 +407,10 @@ export const mockRooms: Room[] = [
     price: 3000,
     images: [
       "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1494526585095-c41746248156?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&h=800&fit=crop",
     ],
     description:
       "Fully furnished room in a shared home with great access to transport.",
@@ -431,6 +463,10 @@ export const mockRooms: Room[] = [
     price: 2200,
     images: [
       "https://images.unsplash.com/photo-1527030280862-64139fba04ca?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&h=800&fit=crop",
     ],
     description: "Affordable shared accommodation near transport routes.",
     bedrooms: 1,

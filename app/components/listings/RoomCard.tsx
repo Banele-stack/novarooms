@@ -59,32 +59,62 @@ export default function RoomCard({
       <div className="group bg-white/80 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/50 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
 
         {/* IMAGE */}
+{/* IMAGE */}
+<div className="relative overflow-hidden h-60">
+  {room.images.length > 1 ? (
+    <div className="grid grid-cols-2 gap-1 h-full">
+      {/* Main image */}
+      <div className="relative overflow-hidden">
+        <img
+          src={room.images[0]}
+          alt={room.name}
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+      </div>
+
+      {/* Right side thumbnails */}
+      <div className="grid grid-rows-2 gap-1">
         <div className="relative overflow-hidden">
           <img
-            src={room.images[0]}
+            src={room.images[1]}
             alt={room.name}
-            className="h-60 w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
+        </div>
 
-          {/* PRICE */}
-          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-4 py-2 rounded-full shadow-md">
-            <span className="font-bold text-violet-700">
-              R{formatMoney(room.price)}
-            </span>
-            <span className="text-xs text-gray-500">/month</span>
+        <div className="grid grid-cols-2 gap-1">
+          <div className="relative overflow-hidden">
+            <img
+              src={room.images[2] ?? room.images[0]}
+              alt={room.name}
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
           </div>
 
+          <div className="relative overflow-hidden">
+            <img
+              src={room.images[3] ?? room.images[1]}
+              alt={room.name}
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
 
-          {/* REPORT */}
-          <div
-            className={`absolute bottom-3 right-3 px-3 py-1.5 rounded-full text-xs font-medium border flex items-center gap-1 ${reportStatus.color}`}
-          >
-            <ShieldAlert size={12} />
-            {reportCount === 0
-              ? "No reports"
-              : `${reportCount} report${reportCount > 1 ? "s" : ""}`}
+            {room.images.length > 4 && (
+              <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white font-bold text-lg">
+                +{room.images.length - 4}
+              </div>
+            )}
           </div>
         </div>
+      </div>
+    </div>
+  ) : (
+    <img
+      src={room.images[0]}
+      alt={room.name}
+      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+    />
+  )}
+</div>
 
         {/* CONTENT */}
         <div className="p-5">
@@ -93,6 +123,26 @@ export default function RoomCard({
           <h3 className="font-bold text-lg line-clamp-1">
             {room.name}
           </h3>
+
+<div className="mt-3 flex items-center justify-between gap-3">
+  <div>
+    <p className="text-2xl font-bold text-violet-700">
+      R{formatMoney(room.price)}
+    </p>
+    <p className="text-xs text-gray-500">
+      per month
+    </p>
+  </div>
+
+  <div
+    className={`px-3 py-1.5 rounded-full text-xs font-medium border flex items-center gap-1 ${reportStatus.color}`}
+  >
+    <ShieldAlert size={12} />
+    {reportCount === 0
+      ? "No reports"
+      : `${reportCount} report${reportCount > 1 ? "s" : ""}`}
+  </div>
+</div>
 
           {/* LOCATION */}
           <div className="flex items-center gap-1 mt-2 text-gray-500">
