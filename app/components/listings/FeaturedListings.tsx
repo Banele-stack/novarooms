@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState, useMemo } from "react";
-import { mockRooms } from "@/app/data/mockRooms";
 import RoomCard from "./RoomCard";
+import { getRooms } from "@/app/services/room.service";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -16,6 +16,10 @@ export default function FeaturedListings() {
     lng: number;
   } | null>(null);
 
+  const [rooms, setRooms] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // 👉 Get user location
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((pos) => {
@@ -25,6 +29,23 @@ export default function FeaturedListings() {
         });
       });
     }
+  }, []);
+
+  // 👉 Fetch rooms from backend
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        setLoading(true);
+        const data = await getRooms();
+        setRooms(data);
+      } catch (err) {
+        console.error("Failed to fetch rooms", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRooms();
   }, []);
 
   // 👉 Distance function (Haversine)
@@ -47,17 +68,21 @@ export default function FeaturedListings() {
     return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
   }
 
-  // 👉 enrich rooms with distance (if location exists)
+  // 👉 Enrich + sort rooms by distance
   const enrichedRooms = useMemo(() => {
-    if (!userLocation) return mockRooms;
+    if (!userLocation) return rooms;
 
-    return mockRooms
+    return rooms
       .map((room) => {
-        // fallback coords (important if you haven’t added lat/lng yet)
         const roomCoords = {
-          lat: -26.2,
-          lng: 28.05,
+          lat: room.location?.lat,
+          lng: room.location?.lng,
         };
+
+        // if backend doesn't have coords, skip distance
+        if (!roomCoords.lat || !roomCoords.lng) {
+          return { ...room, distance: null };
+        }
 
         const distance = getDistanceKm(
           userLocation.lat,
@@ -71,13 +96,26 @@ export default function FeaturedListings() {
           distance,
         };
       })
-      .sort((a: any, b: any) => a.distance - b.distance);
-  }, [userLocation]);
+      .sort((a: any, b: any) => {
+        if (a.distance === null) return 1;
+        if (b.distance === null) return -1;
+        return a.distance - b.distance;
+      });
+  }, [userLocation, rooms]);
+
+  // 👉 Loading state
+  if (loading) {
+    return (
+      <section className="py-20 text-center text-gray-500">
+        Loading featured rooms...
+      </section>
+    );
+  }
 
   return (
     <section className="relative py-14 md:py-20">
 
-      {/* Glow */}
+      {/* Glow effects */}
       <div className="absolute top-0 left-0 w-64 h-64 bg-violet-500/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-0 w-72 h-72 bg-blue-500/5 rounded-full blur-3xl" />
 

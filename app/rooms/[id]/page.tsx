@@ -27,7 +27,9 @@ import {
 } from "lucide-react";
 
 import ReviewSection from "@/app/components/reviews/ReviewSection";
-import { mockRooms } from "@/app/data/mockRooms";
+import { getRoom } from "@/app/services/room.service";
+import { Room } from "@/app/types/room";
+
 
 export default function RoomPage({
   params,
@@ -36,7 +38,8 @@ export default function RoomPage({
 }) {
   const { id } = use(params);
 
-  const room = mockRooms.find((r) => r.id === id);
+  const [room, setRoom] = useState<Room | null>(null);
+const [loading, setLoading] = useState(true);
 
   const [reportOpen, setReportOpen] = useState(false);
   const [reason, setReason] = useState("Fake listing");
@@ -58,20 +61,33 @@ const [galleryOpen, setGalleryOpen] = useState(false);
       });
     }
   }, []);
+  
 
-  if (!room) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-gray-500">
-        Room not found
-      </div>
-    );
-  }
+useEffect(() => {
+  const fetchRoom = async () => {
+    try {
+      setLoading(true);
+      const data = await getRoom(Number(id));
+      setRoom(data);
+    } catch (err) {
+      console.error("Failed to fetch room", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const avgRating =
-    room.reviews.length > 0
-      ? room.reviews.reduce((a, r) => a + r.rating, 0) /
-      room.reviews.length
-      : 0;
+  if (id) fetchRoom();
+}, [id]);
+
+
+
+const avgRating =
+  room?.reviews && room.reviews.length > 0
+    ? room.reviews.reduce(
+        (a: number, r: { rating: number }) => a + r.rating,
+        0
+      ) / room.reviews.length
+    : 0;
 
   function formatMoney(value: number) {
     return new Intl.NumberFormat("en-ZA").format(value);
@@ -108,12 +124,12 @@ const [galleryOpen, setGalleryOpen] = useState(false);
   }
 
   // 👉 fallback coords (if you haven't added them yet)
-  const coords = useMemo(() => {
-    return {
-      lat: -26.2041,
-      lng: 28.0473,
-    };
-  }, []);
+const coords = useMemo(() => {
+  return {
+    lat: -26.2041,
+    lng: 28.0473,
+  };
+}, []);
 
   const distance = userLocation
     ? getDistanceKm(
@@ -132,6 +148,21 @@ const [galleryOpen, setGalleryOpen] = useState(false);
 
   const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${coords.lat},${coords.lng}`;
 
+  if (loading) {
+  return (
+    <div className="min-h-screen flex items-center justify-center text-gray-500">
+      Loading room...
+    </div>
+  );
+}
+
+if (!room) {
+  return (
+    <div className="min-h-screen flex items-center justify-center text-gray-500">
+      Room not found
+    </div>
+  );
+}
   return (
     <main className="min-h-screen bg-gray-50">
       <div className="max-w-5xl mx-auto px-4 py-4 md:py-6">

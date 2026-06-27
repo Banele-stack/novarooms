@@ -20,6 +20,8 @@ import {
   CigaretteOff,
   Building2,
 } from "lucide-react";
+import { useEffect } from "react";
+import { getRooms } from "@/app/services/room.service";
 
 export default function RoomCard({
   room,
@@ -54,58 +56,65 @@ export default function RoomCard({
   const hasValidSize =
     typeof room.size === "number" && room.size > 0;
 
+  useEffect(() => {
+    console.log("Component mounted");
+
+    // example: fetch data
+   getRooms()
+  }, []);
+
   return (
     <Link href={`/rooms/${room.id}`}>
       <div className="group bg-white/80 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/50 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
 
-        {/* IMAGE */}
+
 {/* IMAGE */}
 <div className="relative overflow-hidden h-60">
   {room.images.length > 1 ? (
-    <div className="grid grid-cols-2 gap-1 h-full">
-      {/* Main image */}
+    <div className="grid grid-cols-2 grid-rows-2 gap-1 h-full">
+
+      {/* Main image (top-left) */}
       <div className="relative overflow-hidden">
         <img
           src={room.images[0]}
           alt={room.name}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
       </div>
 
-      {/* Right side thumbnails */}
-      <div className="grid grid-rows-2 gap-1">
-        <div className="relative overflow-hidden">
-          <img
-            src={room.images[1]}
-            alt={room.name}
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-          />
-        </div>
-
-        <div className="grid grid-cols-2 gap-1">
-          <div className="relative overflow-hidden">
-            <img
-              src={room.images[2] ?? room.images[0]}
-              alt={room.name}
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-          </div>
-
-          <div className="relative overflow-hidden">
-            <img
-              src={room.images[3] ?? room.images[1]}
-              alt={room.name}
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-
-            {room.images.length > 4 && (
-              <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white font-bold text-lg">
-                +{room.images.length - 4}
-              </div>
-            )}
-          </div>
-        </div>
+      {/* Top-right */}
+      <div className="relative overflow-hidden">
+        <img
+          src={room.images[1]}
+          alt={room.name}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
       </div>
+
+      {/* Bottom-left */}
+      <div className="relative overflow-hidden">
+        <img
+          src={room.images[2] ?? room.images[0]}
+          alt={room.name}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+      </div>
+
+      {/* Bottom-right */}
+      <div className="relative overflow-hidden">
+        <img
+          src={room.images[3] ?? room.images[1]}
+          alt={room.name}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+
+        {room.images.length > 4 && (
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white font-bold text-lg">
+            +{room.images.length - 4}
+          </div>
+        )}
+      </div>
+
     </div>
   ) : (
     <img
